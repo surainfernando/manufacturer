@@ -1,0 +1,9 @@
+table {
+    border-spacing: 10px;
+    border: 1px solid gray;
+  }
+  #table1{
+    border: 1px solid black;
+    width: 50%;
+  }
+  #test1{font-style: italic;}
