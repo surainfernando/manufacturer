@@ -1,8 +1,8 @@
 import React from 'react';
+//import "../CSS/CreateBottle.scss"
 import ReactTable from 'react-table-6'
 import "bootstrap/dist/css/bootstrap.min.css"
 import 'react-table-6/react-table.css'
-import '../CSS/index.css'
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import axios from 'axios';
@@ -21,12 +21,13 @@ import { Table } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
 import { useState } from 'react';
-import "../CSS/button.css"
+//import "../CSS/CreateBottle.css"
 
 
 
 
-class Home1 extends React.Component {
+
+class Bottle extends React.Component {
     
 
     constructor(props) {
@@ -46,23 +47,12 @@ class Home1 extends React.Component {
             data1:[],a:'hellowooekd',datalength:5  //pagesize
         }
         this.handleInputChange = this.handleInputChange.bind(this);
-        this.getTableValuesFromServer = this.getTableValuesFromServer.bind(this);
-        this.getTableValuesFromServer2 = this.getTableValuesFromServer2.bind(this);
-        this.displayPrompt = this.displayPrompt.bind(this);
-        this.temp2 = this.temp2.bind(this);
-        this.changeState1 = this.changeState1.bind(this);
-        this.changeState2 = this.changeState2.bind(this);
-
+        this.displayPrompt=this.displayPrompt.bind(this)
+        //this.getTableValuesFromServer2=this.getTableValuesFromServer2.bind(this)
+        this.putFirstBatch=this.putFirstBatch.bind(this)
+        this.getTableValuesFromServer1=this.getTableValuesFromServer1.bind(this)
     }
-    getObject()
-    {
-        var x=[
-            {fruit: 'Apple', cost: 100},
-            {fruit: 'Orange', 'cost': 50},
-           
-            ];
-            return x;
-    }
+    
 
 
 
@@ -72,34 +62,42 @@ class Home1 extends React.Component {
     }
 
     componentDidMount() {
+        this.getTableValuesFromServer1()
         //console.log("hello==-----------------------------------------------")
      //   this.getTableValuesFromServer()
 
     }
-    getTableValuesFromServer() {
-        axios.get(`http://localhost:5000/getCSVForDemonstration`)
-            .then((response) => {
 
-                this.setState({
-                    data: response.data, datalength: response.data.length
-                })
-            }
+    putFirstBatch()  {
+        
+       var x={productName:'John Bottled toddy Mini',productID:'P01',creatorName:'Star Bottling',creatorPermit:'PO4567',volume:0.5,description:'Purest Toddy. Small bottle'}
+         axios.post(`http://localhost:5000/manufacturer/putBatch`,x)
+             .then((response) => {
+                 console.log('dfdfddfdfdffdfdf');
+                 console.log(response.data)
+               // this.setState({data1:response.data,datalength:response.data.length})
+ 
+                 //var z=x.a
+                 //var userName = prompt('Please state you reason for booking an appointment'+z)
+ 
+                
+             }
+ 
+ 
+             );
+     }
+  
 
 
-            );
-    }
-
-
-    getTableValuesFromServer2()  {
-       var x=this.getObject()
-       console.log(x)
-        axios.post(`http://localhost:5000/manufacturer/getbusinessmen`)
+    getTableValuesFromServer1()  {
+       
+        axios.post(`http://localhost:5000/manufacturer/getBottle`)
             .then((response) => {
                 console.log('dfdfddfdfdffdfdf');
                 console.log(response.data)
                this.setState({data1:response.data,datalength:response.data.length})
 
-                var z=x.a
+               // var z=x.a
                 //var userName = prompt('Please state you reason for booking an appointment'+z)
 
                
@@ -117,35 +115,14 @@ class Home1 extends React.Component {
     {
         this.setState({a: "rock"})
     }
-    changeState2()
-    {
-        this.setState({datalength: 10})
-    }
-    temp2() {
-        this.setState({
-            a: "rock"
-        });
-
-    }
+    
     
       
     
        
 
 
-    getTemp1() {
-        // axios.get(`http://localhost:5000/temp1`)
-        //   .then( 
-        //     (response)=>{this.setState({
-        //       a: "Email Already Exists"
-        //     })
-        //   });
-        // return 'x';
-        // searchFunction1(this.state.search, this.state.packaging, this.state.originlocation, this.state.value.min, this.state.value.max).then((products) => {
-        // 	// console.log(products1)
-        // 	this.setState({ products });
-        // });
-    }
+    
 
 
 
@@ -198,26 +175,15 @@ class Home1 extends React.Component {
              age: 37  
              }]  
              const a='rpck'
-         const columns2 = [{  
-           Header: 'Name',  
-           accessor: 'name'  
+         const columns = [{  
+           Header: 'Bottle ID',  
+           accessor: 'bottle_id'  
            },{  
-           Header: 'Permit Number',  
-           accessor: 'permit_number'  
-           }]  
-           const columns = [{  
-            Header: 'Name',  
-            accessor: 'name'  
-            },{  
-            Header: 'Permit Number',  
-            accessor: 'permit_number'  
-            },{  
-                            Header: 'Business Type',  
-                            accessor: 'business_type'  
-                            },{  
-                                    Header: 'Volume (litre)',  
-                                    accessor: 'volume'  
-                                    }]  
+           Header: 'Batch Id',  
+           accessor: 'batch_id' 
+           }
+           ]  
+          
             
 
          
@@ -227,7 +193,7 @@ class Home1 extends React.Component {
             <body>
 
                 <div class="jumbotron bg-success text-center">
-                    <h1 class="text-white"> Total Toddy Stored </h1>
+                    <h1 class="text-white"> Bottles </h1>
 
                 </div>
 
@@ -235,22 +201,23 @@ class Home1 extends React.Component {
                     <div class="row">
                      
                         <div class="col-sm-12">
-                            <h2>Description</h2>
-                            <p>The table below displays the total toddy volume currently owned by each entity</p>
+                          
 
                         </div>
 
 
 
                     </div>
+                    <div class="row"><div class="col-sm-12">
+                   
+                    
+                    </div></div>
                     <div class="row">
                     <div class="col-sm-12">
-                    <button class="login" onClick={this.getTableValuesFromServer2}>Refresh</button>
-                    <br/>
-                    <br/>
-                   
-                    <div>
-                  
+                    <button class="login" onClick={this.getTableValuesFromServer1}>Refresh</button>
+                    <p></p>
+                    <p></p>
+                    <p></p>
                     <ReactTable class={"ReactTable"}
                     data={this.state.data1}  
                     columns={columns} 
@@ -260,12 +227,14 @@ class Home1 extends React.Component {
                     pageSize={parseInt(this.state.datalength)}
                     sortable={false}
                     resizable={false}
-        />
-              
-                    </div>
+                    />
                     </div>
                     
+                    
+                    
                     </div>
+                    
+                   
                     
 
                    
@@ -277,5 +246,5 @@ class Home1 extends React.Component {
     
 }
 
-export default Home1;
+export default Bottle;
 
